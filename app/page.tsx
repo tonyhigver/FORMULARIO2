@@ -6,12 +6,22 @@ export default function Home() {
   const [tipoDataset, setTipoDataset] = useState("");
   const [nivelDificultad, setNivelDificultad] = useState("");
   const [formato, setFormato] = useState("");
-  const [estiloLenguaje, setEstiloLenguaje] = useState("");
+  const [estiloLenguaje, setEstiloLenguaje] = useState<string[]>([]);
   const [cantidad, setCantidad] = useState("");
   const [estiloEntrenamiento, setEstiloEntrenamiento] = useState("");
-  const [coberturaTemporal, setCoberturaTemporal] = useState("");
+  const [coberturaTemporal, setCoberturaTemporal] = useState<string[]>([]);
+  const [nivelContexto, setNivelContexto] = useState<string[]>([]);
+  const [tipoContenido, setTipoContenido] = useState<string[]>([]);
 
   const cardStyle = "p-4 border rounded-lg shadow-sm bg-white hover:shadow-md transition duration-200";
+
+  const toggleSelection = (value: string, arr: string[], setArr: (v: string[]) => void) => {
+    if (arr.includes(value)) {
+      setArr(arr.filter((v) => v !== value));
+    } else {
+      setArr([...arr, value]);
+    }
+  };
 
   return (
     <div className="max-w-3xl mx-auto mt-10 p-6 space-y-6">
@@ -32,7 +42,6 @@ export default function Home() {
         </select>
       </div>
 
-      {/* Secciones dinámicas */}
       {tipoDataset && (
         <div className="space-y-4">
           {/* Nivel de dificultad */}
@@ -69,22 +78,55 @@ export default function Home() {
             </select>
           </div>
 
-          {/* Estilo de lenguaje */}
+          {/* Estilo de lenguaje (multi) */}
           <div className={cardStyle}>
             <label className="block mb-2 font-medium">Estilo de lenguaje:</label>
-            <select
-              className="w-full border p-2 rounded"
-              value={estiloLenguaje}
-              onChange={(e) => setEstiloLenguaje(e.target.value)}
-            >
-              <option value="">-- Selecciona --</option>
-              <option value="formal">Formal</option>
-              <option value="coloquial">Coloquial</option>
-              <option value="resumido">Resumido</option>
-              <option value="detallado">Detallado</option>
-              <option value="tecnico">Técnico</option>
-              <option value="educativo">Educativo / estilo docente</option>
-            </select>
+            <div className="space-y-1">
+              {["Formal", "Coloquial", "Resumido", "Detallado", "Técnico", "Educativo / estilo docente"].map((item) => (
+                <label key={item} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={estiloLenguaje.includes(item)}
+                    onChange={() => toggleSelection(item, estiloLenguaje, setEstiloLenguaje)}
+                  />
+                  {item}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Nivel de contexto / profundidad (multi) */}
+          <div className={cardStyle}>
+            <label className="block mb-2 font-medium">Nivel de contexto / profundidad:</label>
+            <div className="space-y-1">
+              {["Ejemplos simples", "Explicaciones detalladas", "Pasos de razonamiento", "Análisis crítico"].map((item) => (
+                <label key={item} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={nivelContexto.includes(item)}
+                    onChange={() => toggleSelection(item, nivelContexto, setNivelContexto)}
+                  />
+                  {item}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Tipo de contenido (multi) */}
+          <div className={cardStyle}>
+            <label className="block mb-2 font-medium">Tipo de contenido:</label>
+            <div className="space-y-1">
+              {["Pregunta-respuesta", "Explicación", "Casos de estudio", "Ejercicios con solución", "Simulaciones", "Prompts para IA"].map((item) => (
+                <label key={item} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={tipoContenido.includes(item)}
+                    onChange={() => toggleSelection(item, tipoContenido, setTipoContenido)}
+                  />
+                  {item}
+                </label>
+              ))}
+            </div>
           </div>
 
           {/* Cantidad de ejemplos / tamaño */}
@@ -118,19 +160,21 @@ export default function Home() {
             </select>
           </div>
 
-          {/* Cobertura temporal / actualización */}
+          {/* Cobertura temporal / actualización (multi) */}
           <div className={cardStyle}>
             <label className="block mb-2 font-medium">Cobertura temporal / actualización:</label>
-            <select
-              className="w-full border p-2 rounded"
-              value={coberturaTemporal}
-              onChange={(e) => setCoberturaTemporal(e.target.value)}
-            >
-              <option value="">-- Selecciona --</option>
-              <option value="historicos">Datos históricos</option>
-              <option value="recientes">Datos recientes</option>
-              <option value="tiempo-real">En tiempo real (donde aplique)</option>
-            </select>
+            <div className="space-y-1">
+              {["Datos históricos", "Datos recientes", "En tiempo real (donde aplique)"].map((item) => (
+                <label key={item} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={coberturaTemporal.includes(item)}
+                    onChange={() => toggleSelection(item, coberturaTemporal, setCoberturaTemporal)}
+                  />
+                  {item}
+                </label>
+              ))}
+            </div>
           </div>
         </div>
       )}
