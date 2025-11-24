@@ -11,12 +11,14 @@ export default function Home() {
   const [estiloEntrenamiento, setEstiloEntrenamiento] = useState("");
   const [coberturaTemporal, setCoberturaTemporal] = useState("");
 
-  return (
-    <div className="max-w-xl mx-auto mt-10 p-6 border rounded shadow-lg">
-      <h1 className="text-2xl font-bold mb-4">Formulario de Dataset</h1>
+  const cardStyle = "p-4 border rounded-lg shadow-sm bg-white hover:shadow-md transition duration-200";
 
-      {/* Selección del tipo de dataset */}
-      <div className="mb-4">
+  return (
+    <div className="max-w-3xl mx-auto mt-10 p-6 space-y-6">
+      <h1 className="text-3xl font-bold text-center mb-6">Formulario de Dataset Interactivo</h1>
+
+      {/* Tipo de Dataset */}
+      <div className={cardStyle}>
         <label className="block mb-2 font-medium">Tipo de Dataset:</label>
         <select
           className="w-full border p-2 rounded"
@@ -30,12 +32,12 @@ export default function Home() {
         </select>
       </div>
 
-      {/* Secciones dinámicas según la selección */}
+      {/* Secciones dinámicas */}
       {tipoDataset && (
-        <div className="mb-6 p-4 border rounded bg-gray-50 space-y-4">
+        <div className="space-y-4">
           {/* Nivel de dificultad */}
-          <div>
-            <label className="block mb-1 font-medium">Nivel de dificultad:</label>
+          <div className={cardStyle}>
+            <label className="block mb-2 font-medium">Nivel de dificultad:</label>
             <select
               className="w-full border p-2 rounded"
               value={nivelDificultad}
@@ -50,8 +52,8 @@ export default function Home() {
           </div>
 
           {/* Formato de presentación */}
-          <div>
-            <label className="block mb-1 font-medium">Formato de presentación:</label>
+          <div className={cardStyle}>
+            <label className="block mb-2 font-medium">Formato de presentación:</label>
             <select
               className="w-full border p-2 rounded"
               value={formato}
@@ -68,8 +70,8 @@ export default function Home() {
           </div>
 
           {/* Estilo de lenguaje */}
-          <div>
-            <label className="block mb-1 font-medium">Estilo de lenguaje:</label>
+          <div className={cardStyle}>
+            <label className="block mb-2 font-medium">Estilo de lenguaje:</label>
             <select
               className="w-full border p-2 rounded"
               value={estiloLenguaje}
@@ -86,8 +88,8 @@ export default function Home() {
           </div>
 
           {/* Cantidad de ejemplos / tamaño */}
-          <div>
-            <label className="block mb-1 font-medium">Cantidad de ejemplos / tamaño:</label>
+          <div className={cardStyle}>
+            <label className="block mb-2 font-medium">Cantidad de ejemplos / tamaño:</label>
             <select
               className="w-full border p-2 rounded"
               value={cantidad}
@@ -103,8 +105,8 @@ export default function Home() {
           </div>
 
           {/* Estilo de entrenamiento */}
-          <div>
-            <label className="block mb-1 font-medium">Estilo de entrenamiento:</label>
+          <div className={cardStyle}>
+            <label className="block mb-2 font-medium">Estilo de entrenamiento:</label>
             <select
               className="w-full border p-2 rounded"
               value={estiloEntrenamiento}
@@ -117,8 +119,8 @@ export default function Home() {
           </div>
 
           {/* Cobertura temporal / actualización */}
-          <div>
-            <label className="block mb-1 font-medium">Cobertura temporal / actualización:</label>
+          <div className={cardStyle}>
+            <label className="block mb-2 font-medium">Cobertura temporal / actualización:</label>
             <select
               className="w-full border p-2 rounded"
               value={coberturaTemporal}
@@ -133,11 +135,13 @@ export default function Home() {
         </div>
       )}
 
-      {/* Botón de enviar */}
+      {/* Botón de envío */}
       {tipoDataset && (
-        <button className="bg-blue-500 text-white px-4 py-2 rounded">
-          Enviar
-        </button>
+        <div className="text-center mt-4">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow">
+            Enviar
+          </button>
+        </div>
       )}
     </div>
   );
