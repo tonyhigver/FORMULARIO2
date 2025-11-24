@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [tipoDataset, setTipoDataset] = useState("");
+
   const [nivelDificultad, setNivelDificultad] = useState("");
   const [formato, setFormato] = useState("");
   const [estiloLenguaje, setEstiloLenguaje] = useState<string[]>([]);
@@ -12,6 +13,10 @@ export default function Home() {
   const [coberturaTemporal, setCoberturaTemporal] = useState<string[]>([]);
   const [nivelContexto, setNivelContexto] = useState<string[]>([]);
   const [tipoContenido, setTipoContenido] = useState<string[]>([]);
+
+  const [dominio, setDominio] = useState<string[]>([]);
+  const [subdominio, setSubdominio] = useState<string[]>([]);
+  const [nivelGranularidad, setNivelGranularidad] = useState<string[]>([]);
 
   const cardStyle = "p-4 border rounded-lg shadow-sm bg-white hover:shadow-md transition duration-200";
 
@@ -128,6 +133,62 @@ export default function Home() {
               ))}
             </div>
           </div>
+
+          {/* Dominio para contexto y especializado */}
+          {(tipoDataset === "contexto" || tipoDataset === "especializado") && (
+            <div className={cardStyle}>
+              <label className="block mb-2 font-medium">Dominio:</label>
+              <div className="space-y-1">
+                {["Medicina", "Derecho", "Marketing", "Física", "Programación", "Música"].map((item) => (
+                  <label key={item} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={dominio.includes(item)}
+                      onChange={() => toggleSelection(item, dominio, setDominio)}
+                    />
+                    {item}
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Subdominio y nivel de granularidad para mixtos */}
+          {tipoDataset === "mixtos" && (
+            <>
+              <div className={cardStyle}>
+                <label className="block mb-2 font-medium">Subdominio / especialización:</label>
+                <div className="space-y-1">
+                  {["Cardiología vs Medicina general", "Contratos laborales vs Contratos civiles"].map((item) => (
+                    <label key={item} className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={subdominio.includes(item)}
+                        onChange={() => toggleSelection(item, subdominio, setSubdominio)}
+                      />
+                      {item}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className={cardStyle}>
+                <label className="block mb-2 font-medium">Nivel de granularidad:</label>
+                <div className="space-y-1">
+                  {["General (conceptos amplios)", "Especializado (micro-nicho, detalles finos)"].map((item) => (
+                    <label key={item} className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={nivelGranularidad.includes(item)}
+                        onChange={() => toggleSelection(item, nivelGranularidad, setNivelGranularidad)}
+                      />
+                      {item}
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Cantidad de ejemplos / tamaño */}
           <div className={cardStyle}>
